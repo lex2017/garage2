@@ -1,39 +1,15 @@
 ﻿@model Garage2.Models.Vehicle
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detaljerade uppgifter";
 }
 
-<h2>Details</h2>
+<h2>Detaljerade uppgifter</h2>
 
 <div>
-    <h4>Vehicle</h4>
+    <h4>Fordon</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RegNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RegNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Color)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Color)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Manufacturer)
         </dt>
@@ -61,6 +37,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Tillbaka till översikten", "Index")
 </p>
