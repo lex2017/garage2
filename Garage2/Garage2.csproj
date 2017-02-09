@@ -134,6 +134,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702081536116_InitialCreate.cs" />
+    <Compile Include="Migrations\201702081536116_InitialCreate.Designer.cs">
+      <DependentUpon>201702081536116_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702091403194_AddDataAnnotationsMig.cs" />
+    <Compile Include="Migrations\201702091403194_AddDataAnnotationsMig.Designer.cs">
+      <DependentUpon>201702091403194_AddDataAnnotationsMig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702091435348_AddDataAnnotationsMig1.cs" />
+    <Compile Include="Migrations\201702091435348_AddDataAnnotationsMig1.Designer.cs">
+      <DependentUpon>201702091435348_AddDataAnnotationsMig1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -188,6 +201,17 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201702081536116_InitialCreate.resx">
+      <DependentUpon>201702081536116_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702091403194_AddDataAnnotationsMig.resx">
+      <DependentUpon>201702091403194_AddDataAnnotationsMig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702091435348_AddDataAnnotationsMig1.resx">
+      <DependentUpon>201702091435348_AddDataAnnotationsMig1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
