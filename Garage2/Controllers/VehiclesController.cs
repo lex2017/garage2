@@ -51,9 +51,18 @@ namespace Garage2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Vehicles.Add(vehicle);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+
+                var rgnr = db.Vehicles.FirstOrDefault(x=>x.RegNumber==vehicle.RegNumber);
+                if (rgnr == null)
+                {
+                    db.Vehicles.Add(vehicle);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else 
+                {
+                    
+                }
             }
 
             return View(vehicle);

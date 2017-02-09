@@ -146,6 +146,10 @@
     <Compile Include="Migrations\201702091435348_AddDataAnnotationsMig1.Designer.cs">
       <DependentUpon>201702091435348_AddDataAnnotationsMig1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702091456545_AddDataAnnotationsMig2.cs" />
+    <Compile Include="Migrations\201702091456545_AddDataAnnotationsMig2.Designer.cs">
+      <DependentUpon>201702091456545_AddDataAnnotationsMig2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -211,6 +215,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702091435348_AddDataAnnotationsMig1.resx">
       <DependentUpon>201702091435348_AddDataAnnotationsMig1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702091456545_AddDataAnnotationsMig2.resx">
+      <DependentUpon>201702091456545_AddDataAnnotationsMig2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
