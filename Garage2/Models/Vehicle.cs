@@ -8,7 +8,6 @@ namespace Garage2.Models
 {
     public class Vehicle
     {
-        //tjoho
         public int Id { get; set; }
         [DisplayName("Fordonstyp")]
         public VehicleType Type { get; set; }
