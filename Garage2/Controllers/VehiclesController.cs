@@ -79,6 +79,7 @@ namespace Garage2.Controllers
                 var rgnr = db.ve.FirstOrDefault(x=>x.RegNumber==vehicle.RegNumber);
                 if (rgnr == null)
                 {
+                    vehicle.ParkAt = DateTime.Now;
                     db.ve.Add(vehicle);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -144,9 +145,29 @@ namespace Garage2.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Vehicle vehicle = db.ve.Find(id);
+            var dt = DateTime.Now.Subtract(vehicle.ParkAt);
+            var cost =dt.Hours*60+dt.Minutes;
             db.ve.Remove(vehicle);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        public ActionResult Receipt(int? id)
+        {
+            IQueryable<Vehicle> vehicle = db.ve;
+
+            Vehicle ve = db.ve.Find(id);
+            var dt = DateTime.Now.Subtract(ve.ParkAt);
+            var cost = dt.Hours * 60 + dt.Minutes;
+            var model = new ReceiptViewModel
+            {
+                Id = ve.Id,
+                ParkAt = ve.ParkAt,
+                ParkOut = dt,
+                Cost = cost
+            };
+
+            return View(model);
+
         }
 
         protected override void Dispose(bool disposing)

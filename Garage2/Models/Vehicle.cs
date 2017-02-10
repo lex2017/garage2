@@ -27,6 +27,7 @@ namespace Garage2.Models
         [RegularExpression("^[0-9]*$", ErrorMessage = "Bara siffror är tillåtna.")]
         [DisplayName("Antal hjul")]
         public int NumberOfWheels { get; set; }
+        public DateTime ParkAt { get; set; }
     }
 
     public enum VehicleType
