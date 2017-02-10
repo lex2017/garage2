@@ -32,9 +32,9 @@ namespace Garage2.Models
     public enum VehicleType
     {
         Bil,
-        Motorcykel,
-        Flygplan,
         Buss,
-        Båt
+        Båt,
+        Flygplan,
+        Motorcykel,
     };
 }

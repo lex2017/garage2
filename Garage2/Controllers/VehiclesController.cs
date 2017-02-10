@@ -16,9 +16,33 @@ namespace Garage2.Controllers
         private GarageContext db = new GarageContext();
 
         // GET: Vehicles
-        public ActionResult Index()
+        public ActionResult Index(bool? sortvar,string orderby, string searchString)
         {
-            return View(db.Vehicles.ToList());
+            IQueryable<Vehicle> ve = db.ve;
+        
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                ve = ve.Where(s => s.RegNumber.Contains(searchString));
+                ViewBag.searchString = searchString;
+            }
+
+            if (orderby != null)
+            {
+                ViewBag.OrderBy = orderby;
+                
+                
+                if (sortvar == true)
+                {
+                    ve = ve.OrderByDescending(s => s.Type);
+                    ViewBag.flag = false;
+                }
+                else
+                {
+                    ve = ve.OrderBy(s => s.Type);
+                    ViewBag.flag = true;
+                }
+            }
+            return View(ve.ToList());
         }
 
         // GET: Vehicles/Details/5
@@ -28,7 +52,7 @@ namespace Garage2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vehicle vehicle = db.Vehicles.Find(id);
+            Vehicle vehicle = db.ve.Find(id);
             if (vehicle == null)
             {
                 return HttpNotFound();
@@ -52,16 +76,16 @@ namespace Garage2.Controllers
             if (ModelState.IsValid)
             {
 
-                var rgnr = db.Vehicles.FirstOrDefault(x=>x.RegNumber==vehicle.RegNumber);
+                var rgnr = db.ve.FirstOrDefault(x=>x.RegNumber==vehicle.RegNumber);
                 if (rgnr == null)
                 {
-                    db.Vehicles.Add(vehicle);
+                    db.ve.Add(vehicle);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
                 else 
                 {
-                    
+                    ViewData["Message"] = "fail";
                 }
             }
 
@@ -75,7 +99,7 @@ namespace Garage2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vehicle vehicle = db.Vehicles.Find(id);
+            Vehicle vehicle = db.ve.Find(id);
             if (vehicle == null)
             {
                 return HttpNotFound();
@@ -106,7 +130,7 @@ namespace Garage2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vehicle vehicle = db.Vehicles.Find(id);
+            Vehicle vehicle = db.ve.Find(id);
             if (vehicle == null)
             {
                 return HttpNotFound();
@@ -119,8 +143,8 @@ namespace Garage2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Vehicle vehicle = db.Vehicles.Find(id);
-            db.Vehicles.Remove(vehicle);
+            Vehicle vehicle = db.ve.Find(id);
+            db.ve.Remove(vehicle);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

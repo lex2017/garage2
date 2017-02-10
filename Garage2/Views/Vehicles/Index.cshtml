@@ -9,10 +9,21 @@
 <p>
     @Html.ActionLink("Parkera", "Create")
 </p>
+<p>
+@using (Html.BeginForm())
+{
+    <p>
+        Sök RegNumber: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+   </p>
+}
 <table class="table">
     <tr>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Type)
+        </th>*@
+        <th>
+            @Html.ActionLink("Fordonstyp", "Index", new { orderby = "Fordonstyp", sortvar = ViewBag.flag, searchString=ViewBag.searchString })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.RegNumber)
