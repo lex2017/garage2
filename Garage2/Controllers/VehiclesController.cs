@@ -117,6 +117,7 @@ namespace Garage2.Controllers
         {
             if (ModelState.IsValid)
             {
+                vehicle.ParkAt = db.ve.AsNoTracking().FirstOrDefault(z => z.Id == vehicle.Id).ParkAt;
                 db.Entry(vehicle).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
