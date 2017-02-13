@@ -167,6 +167,30 @@ namespace Garage2.Controllers
                 return RedirectToAction("Index");
             }
         }
+        public ActionResult Statistics()
+        {
+            int numWheels = db.ve.Sum(c => c.NumberOfWheels);
+            var vehiclestypes = db.ve
+               .GroupBy(v => v.Type)
+               .Select(y => new
+               {
+                   Type = y.Key,
+                   VehicleCount = y.Count(),
+                   
+               }).ToList();
+
+
+            var vehiclestypesResult = vehiclestypes
+
+               .Select(y => new StatisticsViewModel()
+               {
+                   Type = y.Type,
+                   VehicleCount = y.VehicleCount,
+                   WheelsTotal = numWheels
+
+               }).ToList();
+            return View("Statistics",vehiclestypesResult);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -129,6 +129,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\VehiclesController.cs" />
     <Compile Include="DAL\GarageContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -166,8 +167,17 @@
     <Compile Include="Migrations\201702130744585_AddDataAnnotations3.Designer.cs">
       <DependentUpon>201702130744585_AddDataAnnotations3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702131320170_AddDataModel.cs" />
+    <Compile Include="Migrations\201702131320170_AddDataModel.Designer.cs">
+      <DependentUpon>201702131320170_AddDataModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702131406512_AddDataModel2.cs" />
+    <Compile Include="Migrations\201702131406512_AddDataModel2.Designer.cs">
+      <DependentUpon>201702131406512_AddDataModel2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ReceiptViewModel.cs" />
+    <Compile Include="Models\StatisticsViewModel.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -212,6 +222,7 @@
     <Content Include="Views\Vehicles\Edit.cshtml" />
     <Content Include="Views\Vehicles\Index.cshtml" />
     <Content Include="Views\Vehicles\Receipt.cshtml" />
+    <Content Include="Views\Vehicles\Statistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -248,6 +259,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702130744585_AddDataAnnotations3.resx">
       <DependentUpon>201702130744585_AddDataAnnotations3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702131320170_AddDataModel.resx">
+      <DependentUpon>201702131320170_AddDataModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702131406512_AddDataModel2.resx">
+      <DependentUpon>201702131406512_AddDataModel2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
