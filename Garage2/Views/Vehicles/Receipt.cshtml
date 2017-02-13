@@ -1,44 +1,55 @@
-﻿@model IEnumerable<Garage2.Models.ReceiptViewModel>
+﻿@model Garage2.Models.ReceiptViewModel
 
 @{
-    ViewBag.Title = "Receipt";
+    ViewBag.Title = "Parkeringskvitto";
 }
 
-<h2>Kvitto</h2>
+@*<h2 class="text-center" >Kvitto</h2>*@
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ParkTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ParkAt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ParkOut)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cost)
-        </th>
-        <th></th>
-    </tr>
+<div>
+    <h3>Parkeringskvitto</h3>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ParkTime):
+        </dt>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ParkTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ParkAt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ParkOut)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cost)
-        </td>
+        <dd>
+            @Html.DisplayFor(model => model.ParkTime)
+        </dd>
 
-    </tr>
-}
+        <dt>
+            @Html.DisplayNameFor(model => model.ParkAt):
+        </dt>
 
-</table>
+        <dd>
+            @Html.DisplayFor(model => model.ParkAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ParkOut):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ParkOut)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cost):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cost) kr
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Tillbaka till översikten", "Index")
+        </div>
+    }
+</div>

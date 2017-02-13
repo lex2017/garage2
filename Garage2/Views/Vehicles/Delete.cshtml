@@ -1,11 +1,8 @@
 ﻿@model Garage2.Models.Vehicle
-
 @{
     ViewBag.Title = "Kör ut";
 }
-
 <h2>Kör ut</h2>
-
 <h3>Är du säker på att du vill köra ut?</h3>
 <div>
     <h4>Fordon</h4>
@@ -14,59 +11,52 @@
         <dt>
             @Html.DisplayNameFor(model => model.Type)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Type)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.RegNumber)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.RegNumber)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Color)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Color)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Manufacturer)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Manufacturer)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Model)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Model)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.NumberOfWheels)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.NumberOfWheels)
         </dd>
-
     </dl>
-
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
             <input type="submit" value="Kör ut" class="btn btn-default" /> |
             @Html.ActionLink("Tillbaka till översikten", "Index")
+            <div class="checkbox btn-lg">
+                <br>
+                @Html.Label("Markera kryssrutan för Kvitto")
+                @Html.CheckBox("iskvitto", true)
+            </div>
         </div>
     }
 </div>

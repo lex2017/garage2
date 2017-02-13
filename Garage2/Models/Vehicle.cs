@@ -23,10 +23,11 @@ namespace Garage2.Models
         public string Manufacturer { get; set; }
         [DisplayName("Modell")]
         public string Model { get; set; }
-        [Range(0,22,ErrorMessage = "Antal hjul måste vara 0-22.")]
+        [Range(0, 22, ErrorMessage = "Antal hjul måste vara 0-22.")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Bara siffror är tillåtna.")]
         [DisplayName("Antal hjul")]
         public int NumberOfWheels { get; set; }
+        [DisplayName("In-checkningstid")]
         public DateTime ParkAt { get; set; }
     }
 

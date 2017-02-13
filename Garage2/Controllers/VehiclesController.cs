@@ -16,10 +16,10 @@ namespace Garage2.Controllers
         private GarageContext db = new GarageContext();
 
         // GET: Vehicles
-        public ActionResult Index(bool? sortvar,string orderby, string searchString)
+        public ActionResult Index(bool? sortvar, string orderby, string searchString)
         {
             IQueryable<Vehicle> ve = db.ve;
-        
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 ve = ve.Where(s => s.RegNumber.Contains(searchString));
@@ -29,8 +29,8 @@ namespace Garage2.Controllers
             if (orderby != null)
             {
                 ViewBag.OrderBy = orderby;
-                
-                
+
+
                 if (sortvar == true)
                 {
                     ve = ve.OrderByDescending(s => s.Type);
@@ -76,7 +76,7 @@ namespace Garage2.Controllers
             if (ModelState.IsValid)
             {
 
-                var rgnr = db.ve.FirstOrDefault(x=>x.RegNumber==vehicle.RegNumber);
+                var rgnr = db.ve.FirstOrDefault(x => x.RegNumber == vehicle.RegNumber);
                 if (rgnr == null)
                 {
                     vehicle.ParkAt = DateTime.Now;
@@ -84,7 +84,7 @@ namespace Garage2.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                else 
+                else
                 {
                     ViewData["Message"] = "fail";
                 }
@@ -142,34 +142,34 @@ namespace Garage2.Controllers
         // POST: Vehicles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, bool iskvitto)
         {
             Vehicle vehicle = db.ve.Find(id);
-            var dt = DateTime.Now.Subtract(vehicle.ParkAt);
-            var cost =dt.Hours*60+dt.Minutes;
+            TimeSpan pTime = DateTime.Now.Subtract(vehicle.ParkAt);
+            TimeSpan pTime2 = new TimeSpan(pTime.Hours, pTime.Minutes, pTime.Seconds);
+            ReceiptViewModel modelresult = new ReceiptViewModel()
+            {
+                Id = id,
+                ParkAt = vehicle.ParkAt,
+                ParkTime = pTime2,
+                ParkOut = DateTime.Now,
+                Cost = pTime.Hours * 60 + pTime.Minutes
+            };
             db.ve.Remove(vehicle);
             db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-        public ActionResult Receipt(int? id)
-        {
-            IQueryable<Vehicle> vehicle = db.ve;
-
-            Vehicle ve = db.ve.Find(id);
-            var dt = DateTime.Now.Subtract(ve.ParkAt);
-            var cost = dt.Hours * 60 + dt.Minutes;
-            var model = new ReceiptViewModel
+            if (iskvitto == true)
             {
-                Id = ve.Id,
-                ParkAt = ve.ParkAt,
-                ParkOut = dt,
-                Cost = cost
-            };
-
-            return View(model);
-
+                return View("Receipt", modelresult);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
-
+        public ActionResult Receipt(ReceiptViewModel modelresult)
+        {
+            return View(modelresult);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

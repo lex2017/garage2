@@ -158,6 +158,14 @@
     <Compile Include="Migrations\201702101450210_AddModel.Designer.cs">
       <DependentUpon>201702101450210_AddModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702130731583_AddDataAnnotations2.cs" />
+    <Compile Include="Migrations\201702130731583_AddDataAnnotations2.Designer.cs">
+      <DependentUpon>201702130731583_AddDataAnnotations2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702130744585_AddDataAnnotations3.cs" />
+    <Compile Include="Migrations\201702130744585_AddDataAnnotations3.Designer.cs">
+      <DependentUpon>201702130744585_AddDataAnnotations3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ReceiptViewModel.cs" />
     <Compile Include="Models\Vehicle.cs" />
@@ -234,6 +242,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702101450210_AddModel.resx">
       <DependentUpon>201702101450210_AddModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702130731583_AddDataAnnotations2.resx">
+      <DependentUpon>201702130731583_AddDataAnnotations2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702130744585_AddDataAnnotations3.resx">
+      <DependentUpon>201702130744585_AddDataAnnotations3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
