@@ -167,10 +167,6 @@ namespace Garage2.Controllers
                 return RedirectToAction("Index");
             }
         }
-        public ActionResult Receipt(ReceiptViewModel modelresult)
-        {
-            return View(modelresult);
-        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
