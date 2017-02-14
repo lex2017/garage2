@@ -31,17 +31,21 @@
 </table>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.WheelsTotal)
-        </th>
+      <th>
+        @Html.DisplayNameFor(model => model.WheelsTotal)
+      </th>
+    </tr>
+    <tr>
+      <td>
+        @Model.FirstOrDefault().WheelsTotal
+      </td>
+    </tr>
+    <tr>
       <th>
         @Html.DisplayNameFor(model => model.CostTotal)
       </th>
     </tr>
-    <tr>
-        <td>
-        @Model.FirstOrDefault().WheelsTotal
-        </td>
+  <tr>
       <td>
         @Model.FirstOrDefault().CostTotal kr
       </td>
