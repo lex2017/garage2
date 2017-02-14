@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Garage2.DAL;
 using Garage2.Models;
@@ -18,7 +16,7 @@ namespace Garage2.Controllers
         // GET: Vehicles
         public ActionResult Index(bool? sortvar, string orderby, string searchString)
         {
-            IQueryable<Vehicle> ve = db.ve;
+            IQueryable<Vehicle> ve = db.Vehicles;
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -52,7 +50,7 @@ namespace Garage2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vehicle vehicle = db.ve.Find(id);
+            Vehicle vehicle = db.Vehicles.Find(id);
             if (vehicle == null)
             {
                 return HttpNotFound();
@@ -76,11 +74,11 @@ namespace Garage2.Controllers
             if (ModelState.IsValid)
             {
 
-                var rgnr = db.ve.FirstOrDefault(x => x.RegNumber == vehicle.RegNumber);
+                var rgnr = db.Vehicles.FirstOrDefault(x => x.RegNumber == vehicle.RegNumber);
                 if (rgnr == null)
                 {
                     vehicle.ParkAt = DateTime.Now;
-                    db.ve.Add(vehicle);
+                    db.Vehicles.Add(vehicle);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -100,7 +98,7 @@ namespace Garage2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vehicle vehicle = db.ve.Find(id);
+            Vehicle vehicle = db.Vehicles.Find(id);
             if (vehicle == null)
             {
                 return HttpNotFound();
@@ -117,7 +115,7 @@ namespace Garage2.Controllers
         {
             if (ModelState.IsValid)
             {
-                vehicle.ParkAt = db.ve.AsNoTracking().FirstOrDefault(z => z.Id == vehicle.Id).ParkAt;
+                vehicle.ParkAt = db.Vehicles.AsNoTracking().FirstOrDefault(z => z.Id == vehicle.Id).ParkAt;
                 db.Entry(vehicle).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -132,7 +130,7 @@ namespace Garage2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vehicle vehicle = db.ve.Find(id);
+            Vehicle vehicle = db.Vehicles.Find(id);
             if (vehicle == null)
             {
                 return HttpNotFound();
@@ -145,7 +143,7 @@ namespace Garage2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id, bool iskvitto)
         {
-            Vehicle vehicle = db.ve.Find(id);
+            Vehicle vehicle = db.Vehicles.Find(id);
             TimeSpan pTime = DateTime.Now.Subtract(vehicle.ParkAt);
             TimeSpan pTime2 = new TimeSpan(pTime.Hours, pTime.Minutes, pTime.Seconds);
             ReceiptViewModel modelresult = new ReceiptViewModel()
@@ -156,7 +154,7 @@ namespace Garage2.Controllers
                 ParkOut = DateTime.Now,
                 Cost = pTime.Hours * 60 + pTime.Minutes
             };
-            db.ve.Remove(vehicle);
+            db.Vehicles.Remove(vehicle);
             db.SaveChanges();
             if (iskvitto == true)
             {
@@ -167,30 +165,34 @@ namespace Garage2.Controllers
                 return RedirectToAction("Index");
             }
         }
+
         public ActionResult Statistics()
         {
-            int numWheels = db.ve.Sum(c => c.NumberOfWheels);
-            var vehiclestypes = db.ve
+            var vehiclestypes = db.Vehicles
                .GroupBy(v => v.Type)
                .Select(y => new
                {
                    Type = y.Key,
-                   VehicleCount = y.Count(),
-                   
+                   VehicleCount = y.Count()                   
                }).ToList();
 
+            int numWheels = db.Vehicles.Sum(c => c.NumberOfWheels);
+
+            double totalMinutes = 0;
+            foreach (var vehicle in db.Vehicles)
+                totalMinutes += Math.Round((DateTime.Now - vehicle.ParkAt).TotalMinutes);
 
             var vehiclestypesResult = vehiclestypes
-
                .Select(y => new StatisticsViewModel()
                {
                    Type = y.Type,
                    VehicleCount = y.VehicleCount,
-                   WheelsTotal = numWheels
-
+                   WheelsTotal = numWheels,
+                   CostTotal = (int)(totalMinutes * 60) / 60
                }).ToList();
-            return View("Statistics",vehiclestypesResult);
+            return View("Statistics", vehiclestypesResult);
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

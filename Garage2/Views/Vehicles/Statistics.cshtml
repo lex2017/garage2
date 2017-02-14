@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Garage2.Models.StatisticsViewModel>
 
 @{
-    ViewBag.Title = "Statistics";
+    ViewBag.Title = "Statistik";
 }
 
-<h2>Statistics</h2>
+<h2>Statistik</h2>
 
 
 <table class="table">
@@ -15,14 +15,6 @@
         <th>
             @Html.DisplayNameFor(model => model.VehicleCount)
         </th>
-        
-        @*<th>
-            @Html.DisplayNameFor(model => model.WheelsTotal)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CostTotal)
-        </th>*@
-        <th></th>
     </tr>
   
 @foreach (var item in Model) {
@@ -33,17 +25,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.VehicleCount)
         </td>
-
-        @*<td>
-            @Html.DisplayFor(modelItem => item.WheelsTotal)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CostTotal)
-        </td>*@
-
-    </tr>
-
- 
+    </tr> 
 }
    
 </table>
@@ -52,12 +34,16 @@
         <th>
             @Html.DisplayNameFor(model => model.WheelsTotal)
         </th>
-  
+      <th>
+        @Html.DisplayNameFor(model => model.CostTotal)
+      </th>
     </tr>
     <tr>
         <td>
         @Model.FirstOrDefault().WheelsTotal
         </td>
+      <td>
+        @Model.FirstOrDefault().CostTotal kr
+      </td>
     </tr>
-
 </table>
