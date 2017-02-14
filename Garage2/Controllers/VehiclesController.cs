@@ -20,7 +20,7 @@ namespace Garage2.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                ve = ve.Where(s => s.RegNumber.Contains(searchString));
+                ve = ve.Where(s => s.RegNumber.Contains(searchString) || s.Manufacturer.Contains(searchString));
                 ViewBag.searchString = searchString;
             }
 
