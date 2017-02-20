@@ -9,7 +9,7 @@ namespace Garage2.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "Garage2.DAL.GarageContext";
         }
 
@@ -27,6 +27,16 @@ namespace Garage2.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+
+            context.VehicleTypes.AddOrUpdate(
+                  p => p.VehicleTypeId,
+                  new Models.VehicleType { VehicleTypeId = 1 , Type = "Bil" },
+                  new Models.VehicleType { VehicleTypeId = 2, Type = "Buss" },
+                  new Models.VehicleType { VehicleTypeId = 3, Type = "Båt" },
+                  new Models.VehicleType { VehicleTypeId = 4, Type = "Flygplan" },
+                  new Models.VehicleType { VehicleTypeId = 5, Type = "Motorcykel" }
+                );
         }
     }
 }

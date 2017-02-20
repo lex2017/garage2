@@ -3,16 +3,16 @@ namespace Garage2.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddTimeStamp : DbMigration
+    public partial class Addnamecheck : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.Vehicles", "ParkAt", c => c.DateTime(nullable: false));
+            AlterColumn("dbo.Members", "Name", c => c.String(nullable: false));
         }
         
         public override void Down()
         {
-            DropColumn("dbo.Vehicles", "ParkAt");
+            AlterColumn("dbo.Members", "Name", c => c.String());
         }
     }
 }

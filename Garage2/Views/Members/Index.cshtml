@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Garage2.Models.Member>
+
+@{
+    ViewBag.Title = "Medlemskap";
+}
+
+<h2>Medlemskap</h2>
+
+<p>
+    @Html.ActionLink("Registera ny medlem", "Create")
+</p>
+@using (Html.BeginForm())
+{
+    <p>
+        Medlemsnamn: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Sök" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Redigera", "Edit", new { id=item.MemberId }) |
+            @Html.ActionLink("Detaljer", "Details", new { id=item.MemberId }) |
+            @Html.ActionLink("Avsluta medlemskap", "Delete", new { id=item.MemberId })
+        </td>
+    </tr>
+}
+
+</table>

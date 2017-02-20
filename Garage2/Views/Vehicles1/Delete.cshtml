@@ -1,57 +1,88 @@
 ﻿@model Garage2.Models.Vehicle
+
 @{
-    ViewBag.Title = "Kör ut";
+    ViewBag.Title = "Delete";
 }
-<h2>Kör ut</h2>
-<h3>Är du säker på att du vill köra ut?</h3>
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Fordon</h4>
+    <h4>Vehicle</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.Member.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Member.Name)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.VehicleType.Type)
         </dt>
+
         <dd>
             @Html.DisplayFor(model => model.VehicleType.Type)
         </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.RegNumber)
         </dt>
+
         <dd>
             @Html.DisplayFor(model => model.RegNumber)
         </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Color)
         </dt>
+
         <dd>
             @Html.DisplayFor(model => model.Color)
         </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Manufacturer)
         </dt>
+
         <dd>
             @Html.DisplayFor(model => model.Manufacturer)
         </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Model)
         </dt>
+
         <dd>
             @Html.DisplayFor(model => model.Model)
         </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.NumberOfWheels)
         </dt>
+
         <dd>
             @Html.DisplayFor(model => model.NumberOfWheels)
         </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ParkAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ParkAt)
+        </dd>
+
     </dl>
-    @using (Html.BeginForm())
-    {
+
+    @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Kör ut" class="btn btn-default" /> |
-            @Html.ActionLink("Tillbaka till översikten", "Index")
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
         </div>
     }
 </div>

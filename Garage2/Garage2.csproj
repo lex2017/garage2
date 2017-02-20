@@ -129,60 +129,37 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\Vehicles1Controller.cs" />
     <Compile Include="Controllers\VehiclesController.cs" />
     <Compile Include="DAL\GarageContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702081536116_InitialCreate.cs" />
-    <Compile Include="Migrations\201702081536116_InitialCreate.Designer.cs">
-      <DependentUpon>201702081536116_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201702171147113_AddModel.cs" />
+    <Compile Include="Migrations\201702171147113_AddModel.Designer.cs">
+      <DependentUpon>201702171147113_AddModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702091403194_AddDataAnnotationsMig.cs" />
-    <Compile Include="Migrations\201702091403194_AddDataAnnotationsMig.Designer.cs">
-      <DependentUpon>201702091403194_AddDataAnnotationsMig.cs</DependentUpon>
+    <Compile Include="Migrations\201702201027226_Addregnr.cs" />
+    <Compile Include="Migrations\201702201027226_Addregnr.Designer.cs">
+      <DependentUpon>201702201027226_Addregnr.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702091435348_AddDataAnnotationsMig1.cs" />
-    <Compile Include="Migrations\201702091435348_AddDataAnnotationsMig1.Designer.cs">
-      <DependentUpon>201702091435348_AddDataAnnotationsMig1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702091456545_AddDataAnnotationsMig2.cs" />
-    <Compile Include="Migrations\201702091456545_AddDataAnnotationsMig2.Designer.cs">
-      <DependentUpon>201702091456545_AddDataAnnotationsMig2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702101324420_AddTimeStamp.cs" />
-    <Compile Include="Migrations\201702101324420_AddTimeStamp.Designer.cs">
-      <DependentUpon>201702101324420_AddTimeStamp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702101450210_AddModel.cs" />
-    <Compile Include="Migrations\201702101450210_AddModel.Designer.cs">
-      <DependentUpon>201702101450210_AddModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702130731583_AddDataAnnotations2.cs" />
-    <Compile Include="Migrations\201702130731583_AddDataAnnotations2.Designer.cs">
-      <DependentUpon>201702130731583_AddDataAnnotations2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702130744585_AddDataAnnotations3.cs" />
-    <Compile Include="Migrations\201702130744585_AddDataAnnotations3.Designer.cs">
-      <DependentUpon>201702130744585_AddDataAnnotations3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702131320170_AddDataModel.cs" />
-    <Compile Include="Migrations\201702131320170_AddDataModel.Designer.cs">
-      <DependentUpon>201702131320170_AddDataModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702131406512_AddDataModel2.cs" />
-    <Compile Include="Migrations\201702131406512_AddDataModel2.Designer.cs">
-      <DependentUpon>201702131406512_AddDataModel2.cs</DependentUpon>
+    <Compile Include="Migrations\201702201345087_Addnamecheck.cs" />
+    <Compile Include="Migrations\201702201345087_Addnamecheck.Designer.cs">
+      <DependentUpon>201702201345087_Addnamecheck.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Member.cs" />
     <Compile Include="Models\ReceiptViewModel.cs" />
     <Compile Include="Models\StatisticsViewModel.cs" />
     <Compile Include="Models\Vehicle.cs" />
+    <Compile Include="Models\VehicleType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Bootstrap_Ready.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -214,13 +191,24 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Vehicles\Create.cshtml" />
     <Content Include="Views\Vehicles\Delete.cshtml" />
     <Content Include="Views\Vehicles\Details.cshtml" />
     <Content Include="Views\Vehicles\Edit.cshtml" />
     <Content Include="Views\Vehicles\Index.cshtml" />
     <Content Include="Views\Vehicles\Receipt.cshtml" />
     <Content Include="Views\Vehicles\Statistics.cshtml" />
+    <Content Include="Views\Vehicles\Create.cshtml" />
+    <Content Include="Views\Members\Create.cshtml" />
+    <Content Include="Views\Members\Delete.cshtml" />
+    <Content Include="Views\Members\Details.cshtml" />
+    <Content Include="Views\Members\Edit.cshtml" />
+    <Content Include="Views\Members\Index.cshtml" />
+    <Content Include="Views\Vehicles1\Create.cshtml" />
+    <Content Include="Views\Vehicles1\Delete.cshtml" />
+    <Content Include="Views\Vehicles1\Details.cshtml" />
+    <Content Include="Views\Vehicles1\Edit.cshtml" />
+    <Content Include="Views\Vehicles1\Index.cshtml" />
+    <Content Include="Views\Vehicles\DetailsView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -234,35 +222,14 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702081536116_InitialCreate.resx">
-      <DependentUpon>201702081536116_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702171147113_AddModel.resx">
+      <DependentUpon>201702171147113_AddModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702091403194_AddDataAnnotationsMig.resx">
-      <DependentUpon>201702091403194_AddDataAnnotationsMig.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702201027226_Addregnr.resx">
+      <DependentUpon>201702201027226_Addregnr.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702091435348_AddDataAnnotationsMig1.resx">
-      <DependentUpon>201702091435348_AddDataAnnotationsMig1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702091456545_AddDataAnnotationsMig2.resx">
-      <DependentUpon>201702091456545_AddDataAnnotationsMig2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702101324420_AddTimeStamp.resx">
-      <DependentUpon>201702101324420_AddTimeStamp.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702101450210_AddModel.resx">
-      <DependentUpon>201702101450210_AddModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702130731583_AddDataAnnotations2.resx">
-      <DependentUpon>201702130731583_AddDataAnnotations2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702130744585_AddDataAnnotations3.resx">
-      <DependentUpon>201702130744585_AddDataAnnotations3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702131320170_AddDataModel.resx">
-      <DependentUpon>201702131320170_AddDataModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702131406512_AddDataModel2.resx">
-      <DependentUpon>201702131406512_AddDataModel2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702201345087_Addnamecheck.resx">
+      <DependentUpon>201702201345087_Addnamecheck.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

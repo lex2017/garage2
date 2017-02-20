@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Garage2.Models.Vehicle>
+
+@{
+    ViewBag.Title = "Detaljerad Översikt";
+}
+
+<h2>Detaljerad Översikt</h2>
+@using (Html.BeginForm())
+{
+    <p>
+        RegNumber/ Märke: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <span id="dlist1">  Fordonstyp: @Html.DropDownList("VehicleTypeId", "Alla")</span>
+        <input type="submit" value="Sök" />
+
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Member)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RegNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Color)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Manufacturer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfWheels)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ParkAt)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Member.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehicleType.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RegNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Color)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Manufacturer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Model)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfWheels)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ParkAt)
+        </td>
+       
+    </tr>
+}
+
+</table>

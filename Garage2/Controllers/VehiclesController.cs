@@ -14,8 +14,9 @@ namespace Garage2.Controllers
         private GarageContext db = new GarageContext();
 
         // GET: Vehicles
-        public ActionResult Index(bool? sortvar, string orderby, string searchString)
+        public ActionResult Index(bool? sortvar, string orderby, string searchString, string VehicleTypeId, bool? parking)
         {
+            ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "VehicleTypeId", "Type");
             IQueryable<Vehicle> ve = db.Vehicles;
 
             if (!String.IsNullOrEmpty(searchString))
@@ -23,7 +24,14 @@ namespace Garage2.Controllers
                 ve = ve.Where(s => s.RegNumber.Contains(searchString) || s.Manufacturer.Contains(searchString));
                 ViewBag.searchString = searchString;
             }
-
+            if (!String.IsNullOrEmpty(VehicleTypeId))
+            {
+                ve = ve.Where(s => s.VehicleTypeId.ToString().Equals(VehicleTypeId));
+            }
+            if (parking==true)
+            {
+                ViewBag.Parking = "Yes";
+            }
             if (orderby != null)
             {
                 ViewBag.OrderBy = orderby;
@@ -31,17 +39,33 @@ namespace Garage2.Controllers
 
                 if (sortvar == true)
                 {
-                    ve = ve.OrderByDescending(s => s.Type);
+                    ve = ve.OrderByDescending(s => s.VehicleType.Type);
                     ViewBag.flag = false;
                 }
                 else
                 {
-                    ve = ve.OrderBy(s => s.Type);
+                    ve = ve.OrderBy(s => s.VehicleType.Type);
                     ViewBag.flag = true;
                 }
             }
             return View(ve.ToList());
         }
+        public ActionResult Details2(string searchString, string VehicleTypeId)
+        {
+            IQueryable<Vehicle> ve = db.Vehicles;
+            ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "VehicleTypeId", "Type");
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                ve = ve.Where(s => s.RegNumber.Contains(searchString) || s.Manufacturer.Contains(searchString));
+                ViewBag.searchString = searchString;
+            }
+            if (!String.IsNullOrEmpty(VehicleTypeId))
+            {
+                ve = ve.Where(s => s.VehicleTypeId.ToString().Equals(VehicleTypeId));
+            }
+            return View("DetailsView",ve.ToList());
+        }
+
 
         // GET: Vehicles/Details/5
         public ActionResult Details(int? id)
@@ -61,6 +85,8 @@ namespace Garage2.Controllers
         // GET: Vehicles/Create
         public ActionResult Create()
         {
+            ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "VehicleTypeId", "Type");
+            ViewBag.MemberId = new SelectList(db.Members, "MemberId", "Name");
             return View();
         }
 
@@ -69,7 +95,7 @@ namespace Garage2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Type,RegNumber,Color,Manufacturer,Model,NumberOfWheels")] Vehicle vehicle)
+        public ActionResult Create([Bind(Include = "Id,Type,RegNumber,Color,Manufacturer,Model,NumberOfWheels,VehicleTypeId,MemberId")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
@@ -80,14 +106,15 @@ namespace Garage2.Controllers
                     vehicle.ParkAt = DateTime.Now;
                     db.Vehicles.Add(vehicle);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { parking = true });
                 }
                 else
                 {
                     ViewData["Message"] = "fail";
+                    ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "VehicleTypeId", "Type");
+                    ViewBag.MemberId = new SelectList(db.Members, "MemberId", "Name");
                 }
             }
-
             return View(vehicle);
         }
 
@@ -103,6 +130,8 @@ namespace Garage2.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.MemberId = new SelectList(db.Members, "MemberId", "Name", vehicle.MemberId);
+            ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "VehicleTypeId", "Type", vehicle.VehicleTypeId);
             return View(vehicle);
         }
 
@@ -111,15 +140,26 @@ namespace Garage2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Type,RegNumber,Color,Manufacturer,Model,NumberOfWheels")] Vehicle vehicle)
+        public ActionResult Edit([Bind(Include = "Id,Type,RegNumber,Color,Manufacturer,Model,NumberOfWheels,VehicleTypeId,MemberId")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
-                vehicle.ParkAt = db.Vehicles.AsNoTracking().FirstOrDefault(z => z.Id == vehicle.Id).ParkAt;
-                db.Entry(vehicle).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var duplicate_regnumber = db.Vehicles.Any(x => x.RegNumber == vehicle.RegNumber);
+                if (duplicate_regnumber)
+                {
+                    // En användare finns redan
+                    ViewData["Message"] = "fail";
+                }
+                else
+                {
+                    vehicle.ParkAt = db.Vehicles.AsNoTracking().FirstOrDefault(z => z.Id == vehicle.Id).ParkAt;
+                    db.Entry(vehicle).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
+            ViewBag.MemberId = new SelectList(db.Members, "MemberId", "Name", vehicle.MemberId);
+            ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "VehicleTypeId", "Type", vehicle.VehicleTypeId);
             return View(vehicle);
         }
 
@@ -141,7 +181,7 @@ namespace Garage2.Controllers
         // POST: Vehicles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id, bool iskvitto)
+        public ActionResult DeleteConfirmed(int id)
         {
             Vehicle vehicle = db.Vehicles.Find(id);
             TimeSpan pTime = DateTime.Now.Subtract(vehicle.ParkAt);
@@ -149,6 +189,7 @@ namespace Garage2.Controllers
             ReceiptViewModel modelresult = new ReceiptViewModel()
             {
                 Id = id,
+                RegNumber = vehicle.RegNumber,
                 ParkAt = vehicle.ParkAt,
                 ParkTime = pTime2,
                 ParkOut = DateTime.Now,
@@ -156,20 +197,13 @@ namespace Garage2.Controllers
             };
             db.Vehicles.Remove(vehicle);
             db.SaveChanges();
-            if (iskvitto == true)
-            {
-                return View("Receipt", modelresult);
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }
+               return View("Receipt", modelresult);
         }
 
         public ActionResult Statistics()
         {
             var vehiclestypes = db.Vehicles
-               .GroupBy(v => v.Type)
+               .GroupBy(v => v.VehicleType)
                .Select(y => new
                {
                    Type = y.Key,

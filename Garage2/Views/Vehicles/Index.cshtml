@@ -4,19 +4,27 @@
     ViewBag.Title = "Översikt";
 }
 
-<h2>Garage2</h2>
+<h2>Garage 2.5</h2>
+    @if (ViewBag.Parking=="Yes")
+    {
+        <p id="parkering1">Parkering lyckades</p>
+    }
+
 
 <p>
-    @Html.ActionLink("Parkera", "Create")
+    @Html.ActionLink("Parkera", "Create" , null,new { @class = "btn btn-primary" })
 </p>
 <p>
-@using (Html.BeginForm())
-{
+    @using (Html.BeginForm())
+    {
     <p>
         RegNumber/ Märke: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Sök"  />
-   </p>
-}
+        <span id="dlist1">  Fordonstyp: @Html.DropDownList("VehicleTypeId", "Alla")</span>
+        <input type="submit" value="Sök" />
+
+    </p>
+    }
+
 <table class="table">
     <tr>
         <th>
@@ -28,19 +36,25 @@
         <th>
             @Html.DisplayNameFor(model => model.ParkAt)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Member)
+        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Type)
+            @Html.DisplayFor(modelItem => item.VehicleType.Type)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RegNumber)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ParkAt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Member.Name)
         </td>
         <td>
             @Html.ActionLink("Redigera", "Edit", new { id=item.Id }) |

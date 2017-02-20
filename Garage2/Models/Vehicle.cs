@@ -10,11 +10,9 @@ namespace Garage2.Models
     public class Vehicle
     {
         public int Id { get; set; }
-        [DisplayName("Fordonstyp")]
-        public VehicleType Type { get; set; }
         [Required(ErrorMessage = "Reg.nummer måste finnas.")]
-        [DisplayName("Reg. nummer")]
         [StringLength(30, MinimumLength = 3, ErrorMessage = "Ange riktig Reg. nummer (minst 3 och max 30 tecken).")]
+        [DisplayName("Reg. nummer")]
         public string RegNumber { get; set; }
         [RegularExpression("^[a-zA-ZåäöÅÄÖ]*$", ErrorMessage = "Bara bokstäver är tillåtna.")]
         [DisplayName("Färg")]
@@ -28,15 +26,17 @@ namespace Garage2.Models
         [DisplayName("Antal hjul")]
         public int NumberOfWheels { get; set; }
         [DisplayName("In-checkningstid")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd H:mm}")]
         public DateTime ParkAt { get; set; }
-    }
 
-    public enum VehicleType
-    {
-        Bil,
-        Buss,
-        Båt,
-        Flygplan,
-        Motorcykel,
-    };
+        [DisplayName("Fordonstyp")]
+        public int VehicleTypeId { get; set; }
+        [DisplayName("Medlemsnamn")]
+        public int MemberId { get; set; }
+        [DisplayName("Medlemsnamn")]
+        public virtual Member Member { get; set; }
+        [DisplayName("Fordonstyp")]
+        public virtual VehicleType VehicleType { get; set; }
+        
+    }
 }
